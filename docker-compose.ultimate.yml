@@ -1,0 +1,473 @@
+version: '3.8'
+
+# ================================================================
+# 🎬 STREAMVAULT PRO ULTIMATE - COMPLETE PRODUCTION STACK
+# ================================================================
+# The most comprehensive IPTV platform deployment ever created
+# Includes: ALL servers, AI/ML engines, monitoring, CDN, and more
+# ================================================================
+
+services:
+  # ============================================================
+  # CORE APPLICATION SERVICES
+  # ============================================================
+  
+  # Main Backend API
+  backend:
+    build: ./backend
+    container_name: streamvault-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://streamvault:${DB_PASSWORD}@postgres:5432/streamvault
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - SRS_API=http://srs:1985
+      - MEDIAMTX_API=http://mediamtx:9997
+    depends_on:
+      - postgres
+      - redis
+      - srs
+    networks:
+      - streamvault
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend Web Application
+  frontend:
+    build: ./frontend
+    container_name: streamvault-frontend
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+    networks:
+      - streamvault
+
+  # Admin Dashboard
+  admin:
+    build: ./admin_dashboard
+    container_name: streamvault-admin
+    restart: unless-stopped
+    ports:
+      - "8001:80"
+    depends_on:
+      - backend
+    networks:
+      - streamvault
+
+  # ============================================================
+  # STREAMING SERVERS (Multi-Protocol)
+  # ============================================================
+  
+  # SRS - Simple Realtime Server (Primary)
+  srs:
+    image: ossrs/srs:5
+    container_name: streamvault-srs
+    restart: unless-stopped
+    ports:
+      - "1935:1935"      # RTMP
+      - "1985:1985"      # HTTP API
+      - "8080:8080"      # HTTP Server (HLS/FLV)
+      - "8000:8000/udp"  # WebRTC UDP
+      - "10080:10080/udp" # SRT
+    volumes:
+      - ./config/srs.conf:/usr/local/srs/conf/srs.conf
+      - srs_data:/usr/local/srs/objs
+    environment:
+      - SRS_DAEMON=off
+    networks:
+      - streamvault
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:1985/api/v1/versions"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # MediaMTX - Multi-Protocol Server (Secondary)
+  mediamtx:
+    image: bluenviron/mediamtx:latest
+    container_name: streamvault-mediamtx
+    restart: unless-stopped
+    ports:
+      - "8554:8554"      # RTSP
+      - "8322:8322"      # RTSPS
+      - "8888:8888"      # HLS
+      - "8889:8889"      # WebRTC
+      - "8890:8890/udp"  # SRT
+      - "9997:9997"      # API
+    volumes:
+      - ./config/mediamtx.yml:/mediamtx.yml
+      - mediamtx_recordings:/recordings
+    networks:
+      - streamvault
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9997/v3/paths/list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # NGINX-RTMP (Fallback/Load Balance)
+  nginx-rtmp:
+    image: tiangolo/nginx-rtmp:latest
+    container_name: streamvault-nginx-rtmp
+    restart: unless-stopped
+    ports:
+      - "1936:1935"      # RTMP alternate
+      - "8081:8080"      # HTTP alternate
+    volumes:
+      - ./config/nginx-rtmp.conf:/etc/nginx/nginx.conf
+      - nginx_hls:/tmp/hls
+      - nginx_dash:/tmp/dash
+    networks:
+      - streamvault
+
+  # ============================================================
+  # AI/ML SERVICES
+  # ============================================================
+  
+  # Pensieve ABR Engine
+  pensieve-abr:
+    build: ./ml_engine
+    container_name: streamvault-pensieve
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - MODEL_PATH=/models/pensieve_model.pt
+      - DEVICE=cpu
+    volumes:
+      - ml_models:/models
+    networks:
+      - streamvault
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+
+  # Video Quality Assessment
+  vqa-service:
+    build: ./video_quality
+    container_name: streamvault-vqa
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      - MODEL_PATH=/models/vqa_model.pt
+      - DEVICE=cpu
+    volumes:
+      - ml_models:/models
+    networks:
+      - streamvault
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  # Research Integration Service
+  research-service:
+    build: ./research_integration
+    container_name: streamvault-research
+    restart: unless-stopped
+    ports:
+      - "5002:5002"
+    volumes:
+      - research_data:/data
+    networks:
+      - streamvault
+
+  # ============================================================
+  # DATABASE & CACHE
+  # ============================================================
+  
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: streamvault-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=streamvault
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=streamvault
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    networks:
+      - streamvault
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U streamvault"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache & Sessions
+  redis:
+    image: redis:7-alpine
+    container_name: streamvault-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    networks:
+      - streamvault
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ============================================================
+  # WEBRTC INFRASTRUCTURE
+  # ============================================================
+  
+  # Coturn TURN/STUN Server
+  coturn:
+    image: coturn/coturn:latest
+    container_name: streamvault-coturn
+    restart: unless-stopped
+    ports:
+      - "3478:3478"
+      - "3478:3478/udp"
+      - "5349:5349"
+      - "5349:5349/udp"
+      - "49152-49200:49152-49200/udp"
+    volumes:
+      - ./config/turnserver.conf:/etc/turnserver.conf
+    command: -c /etc/turnserver.conf
+    networks:
+      - streamvault
+
+  # ============================================================
+  # TRANSCODING & ENCODING
+  # ============================================================
+  
+  # FFmpeg Transcoding Service
+  transcoder:
+    build:
+      context: ./transcoder
+      dockerfile: Dockerfile
+    container_name: streamvault-transcoder
+    restart: unless-stopped
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=video,compute,utility
+    volumes:
+      - transcoding_temp:/tmp/transcoding
+      - media_storage:/media
+    networks:
+      - streamvault
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # ============================================================
+  # MONITORING & OBSERVABILITY
+  # ============================================================
+  
+  # Prometheus Metrics
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: streamvault-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=30d'
+    networks:
+      - streamvault
+
+  # Grafana Dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: streamvault-grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
+    networks:
+      - streamvault
+
+  # Loki Log Aggregation
+  loki:
+    image: grafana/loki:latest
+    container_name: streamvault-loki
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./config/loki-config.yml:/etc/loki/local-config.yaml
+      - loki_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - streamvault
+
+  # Promtail Log Shipper
+  promtail:
+    image: grafana/promtail:latest
+    container_name: streamvault-promtail
+    restart: unless-stopped
+    volumes:
+      - ./config/promtail-config.yml:/etc/promtail/config.yml
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - streamvault
+
+  # ============================================================
+  # REVERSE PROXY & LOAD BALANCER
+  # ============================================================
+  
+  # Traefik Reverse Proxy
+  traefik:
+    image: traefik:v3.0
+    container_name: streamvault-traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8082:8080"  # Traefik dashboard
+    volumes:
+      - ./config/traefik.yml:/etc/traefik/traefik.yml
+      - ./config/traefik-dynamic.yml:/etc/traefik/dynamic.yml
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_certs:/letsencrypt
+    networks:
+      - streamvault
+    labels:
+      - "traefik.enable=true"
+
+  # ============================================================
+  # MESSAGE QUEUE
+  # ============================================================
+  
+  # RabbitMQ for async processing
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: streamvault-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=streamvault
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - streamvault
+
+  # ============================================================
+  # SEARCH ENGINE
+  # ============================================================
+  
+  # Elasticsearch for content search
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: streamvault-elasticsearch
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - streamvault
+
+# ============================================================
+# NETWORKS
+# ============================================================
+
+networks:
+  streamvault:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+# ============================================================
+# VOLUMES
+# ============================================================
+
+volumes:
+  postgres_data:
+  redis_data:
+  srs_data:
+  mediamtx_recordings:
+  nginx_hls:
+  nginx_dash:
+  ml_models:
+  research_data:
+  media_storage:
+  transcoding_temp:
+  prometheus_data:
+  grafana_data:
+  loki_data:
+  traefik_certs:
+  rabbitmq_data:
+  elasticsearch_data:
+
+# ============================================================
+# DEPLOYMENT NOTES
+# ============================================================
+#
+# Quick Start:
+#   1. Copy .env.example to .env and configure secrets
+#   2. docker-compose -f docker-compose.ultimate.yml up -d
+#   3. Access services:
+#      - Web App: http://localhost:8000
+#      - Admin: http://localhost:8001
+#      - API: http://localhost:3000
+#      - Grafana: http://localhost:3001
+#
+# Streaming Endpoints:
+#   - RTMP: rtmp://localhost:1935/live/{stream_key}
+#   - WebRTC: http://localhost:8080/live/{stream}.webrtc
+#   - HLS: http://localhost:8080/live/{stream}.m3u8
+#   - RTSP: rtsp://localhost:8554/live/{stream}
+#
+# AI/ML APIs:
+#   - ABR Engine: http://localhost:5000/api/abr
+#   - VQA Service: http://localhost:5001/api/quality
+#   - Research API: http://localhost:5002/api/research
+#
+# ============================================================

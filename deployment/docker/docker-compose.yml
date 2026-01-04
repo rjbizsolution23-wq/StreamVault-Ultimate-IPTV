@@ -1,0 +1,414 @@
+# StreamVault Pro - Complete Docker Compose Configuration
+# Production-ready IPTV platform deployment
+
+version: '3.8'
+
+services:
+  # ===========================================
+  # DATABASE SERVICES
+  # ===========================================
+  
+  postgres:
+    image: postgres:15-alpine
+    container_name: streamvault_postgres
+    environment:
+      POSTGRES_DB: streamvault_pro
+      POSTGRES_USER: streamvault
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-streamvault_secure_2024}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schemas:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    command: >
+      postgres
+      -c max_connections=200
+      -c shared_buffers=512MB
+      -c effective_cache_size=2GB
+      -c work_mem=16MB
+      -c maintenance_work_mem=256MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U streamvault -d streamvault_pro"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: streamvault_redis
+    volumes:
+      - redis_data:/data
+      - ./deployment/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    command: redis-server /usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ===========================================
+  # STREAMING SERVICES
+  # ===========================================
+  
+  nginx_rtmp:
+    image: nginx:alpine
+    container_name: streamvault_nginx_rtmp
+    volumes:
+      - ./deployment/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deployment/nginx/rtmp.conf:/etc/nginx/rtmp.conf:ro
+      - ./deployment/ssl:/etc/ssl/certs:ro
+      - streaming_storage:/var/streaming
+    ports:
+      - "80:80"
+      - "443:443"
+      - "1935:1935"  # RTMP
+      - "8080:8080"  # HLS
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - api_server
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  ffmpeg_transcoder:
+    build:
+      context: ./deployment/ffmpeg
+      dockerfile: Dockerfile
+    container_name: streamvault_transcoder
+    environment:
+      - INPUT_RTMP=rtmp://nginx_rtmp:1935/live
+      - OUTPUT_HLS=/var/streaming/hls
+      - GPU_ACCELERATION=${GPU_ACCELERATION:-false}
+    volumes:
+      - streaming_storage:/var/streaming
+      - ./content:/var/content:ro
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - nginx_rtmp
+
+  # ===========================================
+  # APPLICATION SERVICES
+  # ===========================================
+  
+  api_server:
+    build:
+      context: ./backend/api
+      dockerfile: Dockerfile
+    container_name: streamvault_api
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      JWT_SECRET: ${JWT_SECRET:-streamvault_jwt_super_secret_2024}
+      
+      # Database
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: streamvault_pro
+      DB_USER: streamvault
+      DB_PASS: ${DB_PASSWORD:-streamvault_secure_2024}
+      
+      # Redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      
+      # CDN & Streaming
+      CDN_BASE_URL: ${CDN_BASE_URL:-https://cdn.streamvault.pro}
+      STREAMING_URL: ${STREAMING_URL:-https://stream.streamvault.pro}
+      
+      # Payment
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      
+      # Email
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASS: ${SMTP_PASS}
+      
+      # External APIs
+      TMDB_API_KEY: ${TMDB_API_KEY}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION:-us-east-1}
+      
+    volumes:
+      - api_logs:/app/logs
+      - streaming_storage:/var/streaming:ro
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  web_app:
+    build:
+      context: ./frontend/web_app
+      dockerfile: Dockerfile
+    container_name: streamvault_webapp
+    environment:
+      - API_BASE_URL=http://api_server:3000/api
+      - STREAMING_BASE_URL=http://nginx_rtmp:8080
+    volumes:
+      - ./frontend/web_app/dist:/usr/share/nginx/html:ro
+    ports:
+      - "8000:80"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - api_server
+
+  admin_dashboard:
+    build:
+      context: ./admin_dashboard
+      dockerfile: Dockerfile
+    container_name: streamvault_admin
+    environment:
+      - REACT_APP_API_URL=http://api_server:3000/api
+      - REACT_APP_WS_URL=ws://api_server:3000
+    ports:
+      - "8001:80"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - api_server
+
+  # ===========================================
+  # MONITORING & ANALYTICS
+  # ===========================================
+  
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: streamvault_prometheus
+    volumes:
+      - ./deployment/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: streamvault_grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-streamvault123}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://localhost:3001
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./deployment/monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./deployment/monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - prometheus
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+    container_name: streamvault_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - xpack.security.enabled=false
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.10.0
+    container_name: streamvault_kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - elasticsearch
+
+  # ===========================================
+  # CDN & CACHING
+  # ===========================================
+  
+  varnish:
+    image: varnish:7.0
+    container_name: streamvault_varnish
+    volumes:
+      - ./deployment/varnish/default.vcl:/etc/varnish/default.vcl:ro
+    environment:
+      - VARNISH_SIZE=1G
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - nginx_rtmp
+
+  # ===========================================
+  # MESSAGE QUEUE & WORKERS
+  # ===========================================
+  
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: streamvault_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: streamvault
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-rabbitmq_secure_2024}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # Management UI
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+
+  worker_content:
+    build:
+      context: ./backend/workers
+      dockerfile: Dockerfile.content
+    container_name: streamvault_worker_content
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RABBITMQ_URL=amqp://streamvault:${RABBITMQ_PASSWORD:-rabbitmq_secure_2024}@rabbitmq:5672/
+      - DB_HOST=postgres
+      - DB_NAME=streamvault_pro
+      - DB_USER=streamvault
+      - DB_PASS=${DB_PASSWORD:-streamvault_secure_2024}
+    volumes:
+      - ./content:/var/content
+      - streaming_storage:/var/streaming
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+
+  worker_analytics:
+    build:
+      context: ./backend/workers
+      dockerfile: Dockerfile.analytics
+    container_name: streamvault_worker_analytics
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9200
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - redis
+      - elasticsearch
+
+  # ===========================================
+  # BACKUP & MAINTENANCE
+  # ===========================================
+  
+  backup_service:
+    build:
+      context: ./deployment/backup
+      dockerfile: Dockerfile
+    container_name: streamvault_backup
+    environment:
+      - BACKUP_SCHEDULE=0 2 * * *  # Daily at 2 AM
+      - DB_HOST=postgres
+      - DB_NAME=streamvault_pro
+      - DB_USER=streamvault
+      - DB_PASS=${DB_PASSWORD:-streamvault_secure_2024}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - S3_BUCKET=${S3_BACKUP_BUCKET:-streamvault-backups}
+    volumes:
+      - ./backups:/backups
+      - postgres_data:/var/lib/postgresql/data:ro
+    restart: unless-stopped
+    networks:
+      - streamvault_network
+    depends_on:
+      - postgres
+
+# ===========================================
+# VOLUMES
+# ===========================================
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  streaming_storage:
+    driver: local
+  api_logs:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+
+# ===========================================
+# NETWORKS
+# ===========================================
+
+networks:
+  streamvault_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

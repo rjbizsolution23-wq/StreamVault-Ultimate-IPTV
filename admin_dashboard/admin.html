@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamVault Pro - Admin Dashboard</title>
+    
+    <!-- External Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.0/index.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #3b82f6;
+            --accent-color: #06b6d4;
+            --dark-bg: #0f172a;
+            --sidebar-bg: #1e293b;
+            --card-bg: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #475569;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            margin: 0.25rem 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .nav-link i {
+            width: 20px;
+            margin-right: 0.75rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin: 0;
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .stat-change.positive {
+            color: var(--success-color);
+        }
+
+        .stat-change.negative {
+            color: var(--danger-color);
+        }
+
+        /* Charts */
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Tables */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .table {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .table thead th {
+            background: var(--sidebar-bg);
+            border: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            padding: 1rem;
+        }
+
+        .table tbody td {
+            border-color: var(--border-color);
+            padding: 1rem;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            border: none;
+            border-radius: 8px;
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            border: none;
+            border-radius: 8px;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        .status-inactive {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                <i class="fas fa-play-circle me-2"></i>StreamVault Pro
+            </a>
+        </div>
+        
+        <ul class="sidebar-nav">
+            <li class="nav-item">
+                <button class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>Dashboard
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-section="users">
+                    <i class="fas fa-users"></i>Users
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-section="content">
+                    <i class="fas fa-film"></i>Content
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-section="channels">
+                    <i class="fas fa-tv"></i>Live Channels
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-section="analytics">
+                    <i class="fas fa-chart-line"></i>Analytics
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-section="revenue">
+                    <i class="fas fa-dollar-sign"></i>Revenue
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-section="streaming">
+                    <i class="fas fa-broadcast-tower"></i>Streaming
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-section="settings">
+                    <i class="fas fa-cog"></i>Settings
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="content-section">
+            <div class="content-header">
+                <h1 class="page-title">Dashboard Overview</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="refreshDashboard()">
+                        <i class="fas fa-refresh me-1"></i>Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.2); color: var(--success-color);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-users">125,847</div>
+                    <p class="stat-label">Total Users</p>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> +12.5% from last month
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: rgba(59, 130, 246, 0.2); color: var(--secondary-color);">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="active-streams">8,342</div>
+                    <p class="stat-label">Active Streams</p>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> +5.2% from yesterday
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.2); color: var(--warning-color);">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="monthly-revenue">$425K</div>
+                    <p class="stat-label">Monthly Revenue</p>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> +18.3% from last month
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: rgba(6, 182, 212, 0.2); color: var(--accent-color);">
+                            <i class="fas fa-server"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="server-uptime">99.9%</div>
+                    <p class="stat-label">Server Uptime</p>
+                    <div class="stat-change positive">
+                        <i class="fas fa-check"></i> All systems operational
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">User Growth & Revenue</h3>
+                            <select class="form-select w-auto" id="chart-period">
+                                <option value="7d">Last 7 Days</option>
+                                <option value="30d" selected>Last 30 Days</option>
+                                <option value="90d">Last 90 Days</option>
+                                <option value="1y">Last Year</option>
+                            </select>
+                        </div>
+                        <canvas id="growth-chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Subscription Tiers</h3>
+                        </div>
+                        <canvas id="subscription-chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity Table -->
+            <div class="table-container">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <h3 class="mb-0">Recent User Activity</h3>
+                    <button class="btn btn-primary btn-sm">View All</button>
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Action</th>
+                            <th>Content</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activity-table">
+                        <!-- Dynamic content will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <div id="users-section" class="content-section" style="display: none;">
+            <div class="content-header">
+                <h1 class="page-title">User Management</h1>
+                <div class="header-actions">
+                    <button class="btn btn-success" onclick="exportUsers()">
+                        <i class="fas fa-download me-1"></i>Export
+                    </button>
+                    <button class="btn btn-primary" onclick="addUser()">
+                        <i class="fas fa-plus me-1"></i>Add User
+                    </button>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="table-container">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <div class="d-flex align-items-center">
+                        <h3 class="mb-0 me-3">All Users</h3>
+                        <span class="badge bg-secondary" id="user-count">125,847 users</span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <input type="search" class="form-control" placeholder="Search users..." id="user-search">
+                        <select class="form-select w-auto" id="user-filter">
+                            <option value="all">All Users</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="premium">Premium</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Subscription</th>
+                            <th>Last Activity</th>
+                            <th>Revenue</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Content Management Section -->
+        <div id="content-section" class="content-section" style="display: none;">
+            <div class="content-header">
+                <h1 class="page-title">Content Management</h1>
+                <div class="header-actions">
+                    <button class="btn btn-success" onclick="uploadContent()">
+                        <i class="fas fa-upload me-1"></i>Upload
+                    </button>
+                    <button class="btn btn-primary" onclick="addContent()">
+                        <i class="fas fa-plus me-1"></i>Add Content
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Stats -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--secondary-color);">52,847</div>
+                        <p class="stat-label">Total Movies</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success-color);">8,342</div>
+                        <p class="stat-label">TV Shows</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--warning-color);">1,247</div>
+                        <p class="stat-label">Live Channels</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--accent-color);">156TB</div>
+                        <p class="stat-label">Total Storage</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Table -->
+            <div class="table-container">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <h3 class="mb-0">Content Library</h3>
+                    <div class="d-flex gap-2">
+                        <select class="form-select w-auto">
+                            <option value="all">All Content</option>
+                            <option value="movies">Movies</option>
+                            <option value="series">TV Series</option>
+                            <option value="live">Live Channels</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Content</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Views</th>
+                            <th>Rating</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="content-table">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Additional sections will be added here -->
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Global variables
+        let currentSection = 'dashboard';
+        let dashboardData = {};
+        
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:3000/api/admin';
+        let authToken = localStorage.getItem('admin_token');
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDashboard();
+            setupNavigation();
+            loadDashboardData();
+        });
+        
+        // Navigation setup
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const section = this.getAttribute('data-section');
+                    switchSection(section);
+                    
+                    // Update active state
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+        
+        // Switch between sections
+        function switchSection(section) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(s => s.style.display = 'none');
+            
+            // Show selected section
+            const targetSection = document.getElementById(section + '-section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                currentSection = section;
+                
+                // Load section-specific data
+                loadSectionData(section);
+            }
+        }
+        
+        // Initialize dashboard
+        function initializeDashboard() {
+            setupCharts();
+            loadRecentActivity();
+            setInterval(updateRealTimeStats, 30000); // Update every 30 seconds
+        }
+        
+        // Setup charts
+        function setupCharts() {
+            // Growth Chart
+            const growthCtx = document.getElementById('growth-chart').getContext('2d');
+            new Chart(growthCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Users',
+                        data: [45000, 52000, 61000, 73000, 89000, 107000, 125000],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        yAxisID: 'y'
+                    }, {
+                        label: 'Revenue ($K)',
+                        data: [120, 145, 180, 220, 285, 345, 425],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#cbd5e1'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#cbd5e1' },
+                            grid: { color: '#475569' }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            ticks: { color: '#cbd5e1' },
+                            grid: { color: '#475569' }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            ticks: { color: '#cbd5e1' },
+                            grid: { drawOnChartArea: false }
+                        }
+                    }
+                }
+            });
+            
+            // Subscription Chart
+            const subscriptionCtx = document.getElementById('subscription-chart').getContext('2d');
+            new Chart(subscriptionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Free', 'Basic', 'Premium', 'Enterprise'],
+                    datasets: [{
+                        data: [45, 30, 20, 5],
+                        backgroundColor: [
+                            '#6b7280',
+                            '#3b82f6',
+                            '#10b981',
+                            '#f59e0b'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#cbd5e1',
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Load dashboard data
+        async function loadDashboardData() {
+            showLoading(true);
+            
+            try {
+                // Simulate API calls
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Update real-time stats
+                updateRealTimeStats();
+                
+                // Load recent activity
+                loadRecentActivity();
+                
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Update real-time statistics
+        function updateRealTimeStats() {
+            // Simulate real-time updates
+            const stats = {
+                totalUsers: Math.floor(125000 + Math.random() * 1000),
+                activeStreams: Math.floor(8000 + Math.random() * 500),
+                monthlyRevenue: 425 + Math.floor(Math.random() * 10),
+                serverUptime: 99.9
+            };
+            
+            document.getElementById('total-users').textContent = stats.totalUsers.toLocaleString();
+            document.getElementById('active-streams').textContent = stats.activeStreams.toLocaleString();
+            document.getElementById('monthly-revenue').textContent = `$${stats.monthlyRevenue}K`;
+            document.getElementById('server-uptime').textContent = `${stats.serverUptime}%`;
+        }
+        
+        // Load recent activity
+        function loadRecentActivity() {
+            const activities = [
+                {
+                    user: 'john.doe@example.com',
+                    action: 'Started watching',
+                    content: 'The Crown S4E1',
+                    time: '2 minutes ago',
+                    status: 'active'
+                },
+                {
+                    user: 'sarah.smith@example.com',
+                    action: 'Subscribed to',
+                    content: 'Premium Plan',
+                    time: '5 minutes ago',
+                    status: 'active'
+                },
+                {
+                    user: 'mike.johnson@example.com',
+                    action: 'Downloaded',
+                    content: 'Avengers: Endgame',
+                    time: '12 minutes ago',
+                    status: 'active'
+                },
+                {
+                    user: 'emma.wilson@example.com',
+                    action: 'Payment failed',
+                    content: 'Basic Plan',
+                    time: '18 minutes ago',
+                    status: 'pending'
+                },
+                {
+                    user: 'david.brown@example.com',
+                    action: 'Account suspended',
+                    content: 'Policy violation',
+                    time: '25 minutes ago',
+                    status: 'inactive'
+                }
+            ];
+            
+            const tableBody = document.getElementById('activity-table');
+            tableBody.innerHTML = activities.map(activity => `
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-2">
+                                <i class="fas fa-user-circle fa-2x text-secondary"></i>
+                            </div>
+                            <div>
+                                <div class="fw-medium">${activity.user}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${activity.action}</td>
+                    <td>${activity.content}</td>
+                    <td class="text-secondary">${activity.time}</td>
+                    <td>
+                        <span class="status-badge status-${activity.status}">
+                            ${activity.status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // Load section-specific data
+        function loadSectionData(section) {
+            switch(section) {
+                case 'users':
+                    loadUsersData();
+                    break;
+                case 'content':
+                    loadContentData();
+                    break;
+                case 'analytics':
+                    loadAnalyticsData();
+                    break;
+                case 'revenue':
+                    loadRevenueData();
+                    break;
+                // Add more cases as needed
+            }
+        }
+        
+        // Load users data
+        function loadUsersData() {
+            const users = [
+                {
+                    name: 'John Doe',
+                    email: 'john.doe@example.com',
+                    subscription: 'Premium',
+                    lastActivity: '2 hours ago',
+                    revenue: '$39.99',
+                    status: 'active'
+                },
+                {
+                    name: 'Sarah Smith', 
+                    email: 'sarah.smith@example.com',
+                    subscription: 'Basic',
+                    lastActivity: '1 day ago',
+                    revenue: '$19.99',
+                    status: 'active'
+                },
+                {
+                    name: 'Mike Johnson',
+                    email: 'mike.johnson@example.com',
+                    subscription: 'Enterprise',
+                    lastActivity: '3 hours ago',
+                    revenue: '$99.99',
+                    status: 'active'
+                }
+            ];
+            
+            const tableBody = document.getElementById('users-table');
+            if (tableBody) {
+                tableBody.innerHTML = users.map(user => `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-user-circle fa-2x text-secondary me-2"></i>
+                                <div>
+                                    <div class="fw-medium">${user.name}</div>
+                                    <div class="text-secondary small">${user.email}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-primary">${user.subscription}</span>
+                        </td>
+                        <td class="text-secondary">${user.lastActivity}</td>
+                        <td class="fw-medium text-success">${user.revenue}</td>
+                        <td>
+                            <span class="status-badge status-${user.status}">${user.status}</span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-primary" onclick="viewUser('${user.email}')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-outline-warning" onclick="editUser('${user.email}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="suspendUser('${user.email}')">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+        
+        // Load content data
+        function loadContentData() {
+            const content = [
+                {
+                    title: 'The Crown',
+                    type: 'TV Series',
+                    category: 'Drama',
+                    views: '2.1M',
+                    rating: '4.8',
+                    status: 'active'
+                },
+                {
+                    title: 'Avengers: Endgame',
+                    type: 'Movie',
+                    category: 'Action',
+                    views: '5.7M',
+                    rating: '4.9',
+                    status: 'active'
+                }
+            ];
+            
+            const tableBody = document.getElementById('content-table');
+            if (tableBody) {
+                tableBody.innerHTML = content.map(item => `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="content-thumbnail me-3">
+                                    <i class="fas fa-film fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-medium">${item.title}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${item.type}</td>
+                        <td>${item.category}</td>
+                        <td>${item.views}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-star text-warning me-1"></i>
+                                ${item.rating}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="status-badge status-${item.status}">${item.status}</span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-primary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-outline-warning">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+        
+        // Utility functions
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            loading.style.display = show ? 'flex' : 'none';
+        }
+        
+        function refreshDashboard() {
+            loadDashboardData();
+        }
+        
+        function exportUsers() {
+            alert('Exporting users data... This feature will be implemented.');
+        }
+        
+        function addUser() {
+            alert('Add user modal will open here.');
+        }
+        
+        function viewUser(email) {
+            alert(`View user details for: ${email}`);
+        }
+        
+        function editUser(email) {
+            alert(`Edit user: ${email}`);
+        }
+        
+        function suspendUser(email) {
+            if (confirm(`Are you sure you want to suspend user: ${email}?`)) {
+                alert(`User ${email} has been suspended.`);
+            }
+        }
+        
+        function uploadContent() {
+            alert('Content upload modal will open here.');
+        }
+        
+        function addContent() {
+            alert('Add content modal will open here.');
+        }
+        
+        // API utility functions
+        async function apiCall(endpoint, options = {}) {
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                },
+                ...options
+            });
+            
+            if (!response.ok) {
+                throw new Error(`API call failed: ${response.statusText}`);
+            }
+            
+            return response.json();
+        }
+        
+        // Real-time updates via WebSocket
+        function initializeWebSocket() {
+            const ws = new WebSocket('ws://localhost:3000');
+            
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+                ws.send(JSON.stringify({
+                    type: 'authenticate',
+                    token: authToken
+                }));
+            };
+            
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                handleRealTimeUpdate(data);
+            };
+            
+            ws.onclose = function() {
+                console.log('WebSocket disconnected');
+                // Reconnect after 5 seconds
+                setTimeout(initializeWebSocket, 5000);
+            };
+        }
+        
+        function handleRealTimeUpdate(data) {
+            switch(data.type) {
+                case 'user_activity':
+                    updateUserActivity(data.payload);
+                    break;
+                case 'stream_stats':
+                    updateStreamStats(data.payload);
+                    break;
+                case 'revenue_update':
+                    updateRevenueStats(data.payload);
+                    break;
+            }
+        }
+        
+        // Initialize WebSocket connection
+        if (authToken) {
+            initializeWebSocket();
+        }
+    </script>
+</body>
+</html>

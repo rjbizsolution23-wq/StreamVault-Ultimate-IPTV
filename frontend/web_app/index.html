@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamVault Pro - Premium IPTV Streaming Platform</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="StreamVault Pro - The ultimate IPTV streaming platform with live TV, movies, sports, and more. Premium quality streaming with 4K support.">
+    <meta name="keywords" content="IPTV, streaming, live TV, movies, sports, 4K, premium, cord cutting">
+    <meta name="author" content="StreamVault Pro">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://streamvault.pro">
+    <meta property="og:title" content="StreamVault Pro - Premium IPTV Streaming">
+    <meta property="og:description" content="Experience premium IPTV streaming with live TV, movies, sports and more.">
+    <meta property="og:image" content="https://cdn.streamvault.pro/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://streamvault.pro">
+    <meta property="twitter:title" content="StreamVault Pro - Premium IPTV Streaming">
+    <meta property="twitter:description" content="Experience premium IPTV streaming with live TV, movies, sports and more.">
+    <meta property="twitter:image" content="https://cdn.streamvault.pro/images/twitter-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- HLS.js for video streaming -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #3b82f6;
+            --accent-color: #06b6d4;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            --border-color: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: var(--text-secondary) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="g"><stop offset="20%" stop-color="%233b82f6" stop-opacity="0.1"/><stop offset="50%" stop-color="%236366f1" stop-opacity="0.05"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><circle cx="200" cy="200" r="300" fill="url(%23g)"/><circle cx="800" cy="800" r="400" fill="url(%23g)"/></svg>');
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-outline-primary {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            padding: 1rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-color: var(--secondary-color);
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 0;
+            background: linear-gradient(180deg, var(--dark-bg) 0%, #1e293b 100%);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--card-bg);
+            padding: 6rem 0;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        /* Video Player */
+        .video-container {
+            position: relative;
+            background: #000;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-player {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-overlay:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Channel Grid */
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .channel-card {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .channel-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .channel-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer h5 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .btn-primary, .btn-outline-primary {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .channel-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-play-circle me-2"></i>StreamVault Pro
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#channels">Live TV</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#movies">Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sports">Sports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-primary ms-2" onclick="showLogin()">
+                            <i class="fas fa-user me-1"></i>Login
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content fade-in">
+                        <h1>
+                            Stream <span class="gradient-text">Everything</span><br>
+                            <span class="gradient-text">Everywhere</span>
+                        </h1>
+                        <p>
+                            Experience premium IPTV streaming with 1000+ live channels, 
+                            50,000+ movies & shows, ultra-low latency, and 4K quality. 
+                            Your entertainment, redefined.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <button class="btn btn-primary btn-lg" onclick="startFreeTrial()">
+                                <i class="fas fa-play me-2"></i>Start Free Trial
+                            </button>
+                            <button class="btn btn-outline-primary btn-lg" onclick="watchDemo()">
+                                <i class="fas fa-video me-2"></i>Watch Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="video-container slide-up">
+                        <video class="video-player" poster="https://via.placeholder.com/800x400/1e293b/3b82f6?text=StreamVault+Pro+Demo" muted>
+                            <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-overlay" onclick="playDemoVideo()">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center mb-5">
+                    <h2 class="display-4 fw-bold mb-4">Why Choose StreamVault Pro?</h2>
+                    <p class="lead">Advanced streaming technology meets premium content delivery</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4>Ultra-Low Latency</h4>
+                        <p class="text-secondary">Sub-200ms streaming with WebRTC technology for real-time viewing experience</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <h4>1000+ Live Channels</h4>
+                        <p class="text-secondary">Premium channels including sports, news, entertainment, and international content</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <h4>50K+ Movies & Shows</h4>
+                        <p class="text-secondary">Massive VOD library with latest releases, classics, and exclusive content</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Multi-Device Support</h4>
+                        <p class="text-secondary">Watch on TV, mobile, tablet, or web browser with seamless synchronization</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Secure & Private</h4>
+                        <p class="text-secondary">Enterprise-grade security with DRM protection and encrypted streams</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h4>4K Ultra HD</h4>
+                        <p class="text-secondary">Crystal clear streaming up to 4K resolution with HDR support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Channels Section -->
+    <section class="py-5" id="channels">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center mb-5">
+                    <h2 class="display-4 fw-bold mb-4">Live TV Channels</h2>
+                    <p class="lead">Browse our extensive collection of premium live TV channels</p>
+                </div>
+            </div>
+            
+            <div class="channel-grid" id="channelGrid">
+                <!-- Channels will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <span class="stat-number">1,000+</span>
+                    <h5>Live Channels</h5>
+                </div>
+                <div class="col-md-3">
+                    <span class="stat-number">50,000+</span>
+                    <h5>Movies & Shows</h5>
+                </div>
+                <div class="col-md-3">
+                    <span class="stat-number">125,000+</span>
+                    <h5>Happy Customers</h5>
+                </div>
+                <div class="col-md-3">
+                    <span class="stat-number">99.9%</span>
+                    <h5>Uptime</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h5><i class="fas fa-play-circle me-2"></i>StreamVault Pro</h5>
+                    <p class="text-secondary">The ultimate IPTV streaming platform delivering premium content with cutting-edge technology.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2">
+                    <h5>Platform</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Live TV</a></li>
+                        <li><a href="#">Movies</a></li>
+                        <li><a href="#">Sports</a></li>
+                        <li><a href="#">International</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2">
+                    <h5>Support</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Device Setup</a></li>
+                        <li><a href="#">Troubleshooting</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2">
+                    <h5>Company</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2">
+                    <h5>Legal</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">DMCA</a></li>
+                        <li><a href="#">Licensing</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4" style="border-color: var(--border-color);">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-secondary mb-0">&copy; 2024 StreamVault Pro. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-secondary mb-0">Built with ❤️ for the streaming revolution</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Global variables
+        let isLoggedIn = false;
+        let currentUser = null;
+        let authToken = null;
+        
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:3000/api';
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            loadChannels();
+            checkAuthStatus();
+        });
+        
+        // App initialization
+        function initializeApp() {
+            // Add scroll effect to navbar
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(15, 23, 42, 0.98)';
+                } else {
+                    navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+                }
+            });
+            
+            // Add animation on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.card, .feature-icon').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Check authentication status
+        function checkAuthStatus() {
+            const token = localStorage.getItem('streamvault_token');
+            if (token) {
+                authToken = token;
+                isLoggedIn = true;
+                updateUIForLoggedInUser();
+            }
+        }
+        
+        // Load live channels
+        async function loadChannels() {
+            try {
+                const channels = [
+                    { id: 1, name: 'CNN', category: 'News', logo: 'CNN' },
+                    { id: 2, name: 'ESPN', category: 'Sports', logo: 'ESPN' },
+                    { id: 3, name: 'HBO', category: 'Entertainment', logo: 'HBO' },
+                    { id: 4, name: 'BBC', category: 'News', logo: 'BBC' },
+                    { id: 5, name: 'FOX', category: 'Entertainment', logo: 'FOX' },
+                    { id: 6, name: 'MTV', category: 'Music', logo: 'MTV' },
+                    { id: 7, name: 'Discovery', category: 'Documentary', logo: 'DISC' },
+                    { id: 8, name: 'National Geographic', category: 'Documentary', logo: 'NAT' }
+                ];
+                
+                const channelGrid = document.getElementById('channelGrid');
+                channelGrid.innerHTML = '';
+                
+                channels.forEach(channel => {
+                    const channelCard = createChannelCard(channel);
+                    channelGrid.appendChild(channelCard);
+                });
+            } catch (error) {
+                console.error('Error loading channels:', error);
+            }
+        }
+        
+        // Create channel card element
+        function createChannelCard(channel) {
+            const card = document.createElement('div');
+            card.className = 'channel-card';
+            card.onclick = () => selectChannel(channel);
+            
+            card.innerHTML = `
+                <div class="channel-logo">
+                    ${channel.logo}
+                </div>
+                <h6 class="mb-1">${channel.name}</h6>
+                <small class="text-secondary">${channel.category}</small>
+            `;
+            
+            return card;
+        }
+        
+        // Select channel for viewing
+        function selectChannel(channel) {
+            if (!isLoggedIn) {
+                showLogin();
+                return;
+            }
+            
+            showLoading(true);
+            
+            // Simulate channel loading
+            setTimeout(() => {
+                showLoading(false);
+                alert(`Now playing: ${channel.name}\n\nThis would normally open the video player with the live stream.`);
+            }, 1500);
+        }
+        
+        // Demo video playback
+        function playDemoVideo() {
+            const video = document.querySelector('.video-player');
+            const overlay = document.querySelector('.video-overlay');
+            
+            video.play();
+            overlay.style.display = 'none';
+            
+            video.addEventListener('pause', () => {
+                overlay.style.display = 'flex';
+            });
+        }
+        
+        // Show login modal
+        function showLogin() {
+            // Simple login simulation
+            const email = prompt('Enter your email:');
+            if (!email) return;
+            
+            const password = prompt('Enter your password:');
+            if (!password) return;
+            
+            showLoading(true);
+            
+            // Simulate login API call
+            setTimeout(() => {
+                showLoading(false);
+                
+                // Mock successful login
+                isLoggedIn = true;
+                currentUser = { email: email, name: email.split('@')[0] };
+                authToken = 'mock_jwt_token_' + Date.now();
+                
+                localStorage.setItem('streamvault_token', authToken);
+                localStorage.setItem('streamvault_user', JSON.stringify(currentUser));
+                
+                updateUIForLoggedInUser();
+                alert('Login successful! Welcome to StreamVault Pro.');
+            }, 1500);
+        }
+        
+        // Update UI for logged in user
+        function updateUIForLoggedInUser() {
+            const loginBtn = document.querySelector('.btn-outline-primary');
+            if (loginBtn && currentUser) {
+                loginBtn.innerHTML = `<i class="fas fa-user-circle me-1"></i>${currentUser.name}`;
+                loginBtn.onclick = showUserMenu;
+            }
+        }
+        
+        // Show user menu
+        function showUserMenu() {
+            const action = confirm('Choose an action:\nOK = My Account\nCancel = Logout');
+            if (action) {
+                alert('Account settings would open here');
+            } else {
+                logout();
+            }
+        }
+        
+        // Logout function
+        function logout() {
+            isLoggedIn = false;
+            currentUser = null;
+            authToken = null;
+            
+            localStorage.removeItem('streamvault_token');
+            localStorage.removeItem('streamvault_user');
+            
+            const loginBtn = document.querySelector('.btn-outline-primary');
+            if (loginBtn) {
+                loginBtn.innerHTML = '<i class="fas fa-user me-1"></i>Login';
+                loginBtn.onclick = showLogin;
+            }
+            
+            alert('Logged out successfully');
+        }
+        
+        // Start free trial
+        function startFreeTrial() {
+            if (!isLoggedIn) {
+                showLogin();
+                return;
+            }
+            
+            alert('Free trial activated! You now have access to all premium content for 30 days.');
+        }
+        
+        // Watch demo
+        function watchDemo() {
+            playDemoVideo();
+        }
+        
+        // Show/hide loading screen
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            loading.style.display = show ? 'flex' : 'none';
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
