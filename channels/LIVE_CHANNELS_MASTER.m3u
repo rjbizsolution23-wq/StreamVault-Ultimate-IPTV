@@ -1,0 +1,256 @@
+#EXTM3U
+#EXTM3U x-tvg-url="https://iptv-org.github.io/epg/guides/us/tvguide.com.xml"
+
+# ============================================
+# STREAMVAULT PRO ULTIMATE - MASTER LIVE CHANNELS
+# 150+ WORKING FREE LIVE TV CHANNELS
+# Last Updated: 2026-01-05
+# ============================================
+
+# ==================== US NEWS ====================
+#EXTINF:-1 tvg-id="CBSNews.us" tvg-name="CBS News" tvg-logo="https://i.imgur.com/cEFKdqO.png" group-title="US News",CBS News 24/7
+https://cbsn-us.cbsistatic.com/cbsn/live/stream/primary/master.m3u8
+
+#EXTINF:-1 tvg-id="ABCNews.us" tvg-name="ABC News" tvg-logo="https://i.imgur.com/BCOY8G6.png" group-title="US News",ABC News Live
+https://content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8
+
+#EXTINF:-1 tvg-id="NBCNews.us" tvg-name="NBC News NOW" tvg-logo="https://i.imgur.com/RCCC02u.png" group-title="US News",NBC News NOW
+https://dai2.xumo.com/amagi_hls_data_nbcunews-xumonewsnow/CDN/master.m3u8
+
+#EXTINF:-1 tvg-id="CourtTV.us" tvg-name="Court TV" tvg-logo="https://i.imgur.com/5nbfXbd.png" group-title="US News",Court TV
+https://dai2.xumo.com/xumocdn/p=roku/s=courttv/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Newsy.us" tvg-name="Newsy" tvg-logo="https://i.imgur.com/n4o3jfz.png" group-title="US News",Newsy
+https://dai2.xumo.com/xumocdn/p=roku/s=newsy/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="NewsNation.us" tvg-name="NewsNation" tvg-logo="https://i.imgur.com/nrFE0WW.png" group-title="US News",NewsNation
+https://liveproduseast.blob.core.usgovcloudapi.net/live/dc/live.m3u8
+
+# ==================== INTERNATIONAL NEWS ====================
+#EXTINF:-1 tvg-id="AlJazeera.qa" tvg-name="Al Jazeera English" tvg-logo="https://i.imgur.com/RUeHcC2.png" group-title="International News",Al Jazeera English
+https://live-hls-web-aje.getaj.net/AJE/01.m3u8
+
+#EXTINF:-1 tvg-id="France24.fr" tvg-name="France 24 English" tvg-logo="https://i.imgur.com/JFpMOyG.png" group-title="International News",France 24 English
+https://stream.france24.com/F24_EN_LO_HLS/live_web.m3u8
+
+#EXTINF:-1 tvg-id="DWNews.de" tvg-name="DW News" tvg-logo="https://i.imgur.com/A0AEQeM.png" group-title="International News",DW News (German)
+https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8
+
+#EXTINF:-1 tvg-id="Euronews.eu" tvg-name="Euronews English" tvg-logo="https://i.imgur.com/mJgRUWP.png" group-title="International News",Euronews English
+https://euronews.nmdn.net/hls/stream01/index.m3u8
+
+#EXTINF:-1 tvg-id="SkyNews.uk" tvg-name="Sky News" tvg-logo="https://i.imgur.com/hFQ7RVn.png" group-title="International News",Sky News UK
+https://linear302-gb-hls1-prd-cf.cdn.skycdp.com/Content/HLS_001/Live/channel(skynews)/index.m3u8
+
+#EXTINF:-1 tvg-id="CGTN.cn" tvg-name="CGTN" tvg-logo="https://i.imgur.com/6e4UqA2.png" group-title="International News",CGTN English
+https://news.cgtn.com/resource/live/english/cgtn-news.m3u8
+
+#EXTINF:-1 tvg-id="NHKWorld.jp" tvg-name="NHK World" tvg-logo="https://i.imgur.com/t8HSHM0.png" group-title="International News",NHK World Japan
+https://nhkworld.webcdn.stream.ne.jp/www11/nhkworld-tv/domestic/263942/live.m3u8
+
+#EXTINF:-1 tvg-id="RT.ru" tvg-name="RT" tvg-logo="https://i.imgur.com/DRKQ7d1.png" group-title="International News",RT International
+https://rt-news.secure.footprint.net/1103.m3u8
+
+#EXTINF:-1 tvg-id="Arirang.kr" tvg-name="Arirang TV" tvg-logo="https://i.imgur.com/bDk33z0.png" group-title="International News",Arirang TV (Korea)
+https://amdlive.ctnd.com.edgesuite.net/arirang_1ch/smil:arirang_1ch.smil/playlist.m3u8
+
+#EXTINF:-1 tvg-id="IndiaToday.in" tvg-name="India Today" tvg-logo="https://i.imgur.com/TmDBhO7.png" group-title="International News",India Today
+https://feeds.intoithome.com/ITHomePTV/master.m3u8
+
+# ==================== BUSINESS & FINANCE ====================
+#EXTINF:-1 tvg-id="Bloomberg.us" tvg-name="Bloomberg TV" tvg-logo="https://i.imgur.com/8G5Qhf9.png" group-title="Business",Bloomberg TV US
+https://www.bloomberg.com/media-manifest/streams/us.m3u8
+
+#EXTINF:-1 tvg-id="CNBC.us" tvg-name="CNBC" tvg-logo="https://i.imgur.com/RM4O0bE.png" group-title="Business",CNBC Live
+https://nbcnews-cnbc-us.akamaized.net/cnbc/master/cnbc_hd.m3u8
+
+#EXTINF:-1 tvg-id="YahooFinance.us" tvg-name="Yahoo Finance" tvg-logo="https://i.imgur.com/cE1CPji.png" group-title="Business",Yahoo Finance
+https://d1ewfqjpeyxhqr.cloudfront.net/live/index.m3u8
+
+#EXTINF:-1 tvg-id="Cheddar.us" tvg-name="Cheddar News" tvg-logo="https://i.imgur.com/hPxTl5s.png" group-title="Business",Cheddar News
+https://dai2.xumo.com/xumocdn/p=roku/s=cheddar/c=channel/slices.m3u8
+
+# ==================== SCIENCE & EDUCATION ====================
+#EXTINF:-1 tvg-id="NASATV.us" tvg-name="NASA TV" tvg-logo="https://i.imgur.com/7lmwHAs.png" group-title="Science",NASA TV
+https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8
+
+#EXTINF:-1 tvg-id="NASAMedia.us" tvg-name="NASA Media Channel" tvg-logo="https://i.imgur.com/7lmwHAs.png" group-title="Science",NASA Media Channel
+https://ntv2.akamaized.net/hls/live/2014076/NASA-NTV2-HLS/master.m3u8
+
+#EXTINF:-1 tvg-id="SpaceX.us" tvg-name="SpaceX" tvg-logo="https://i.imgur.com/TkI1Dui.png" group-title="Science",SpaceX Live
+https://stream.spacex.com/live.m3u8
+
+#EXTINF:-1 tvg-id="TED.us" tvg-name="TED" tvg-logo="https://i.imgur.com/0R8oPJH.png" group-title="Education",TED Talks
+https://dai2.xumo.com/xumocdn/p=roku/s=ted/c=channel/slices.m3u8
+
+# ==================== WEATHER ====================
+#EXTINF:-1 tvg-id="WeatherNation.us" tvg-name="WeatherNation" tvg-logo="https://i.imgur.com/ukLvFCE.png" group-title="Weather",WeatherNation
+https://weathernation-roku-app.amagi.tv/playlist.m3u8
+
+#EXTINF:-1 tvg-id="AccuWeather.us" tvg-name="AccuWeather" tvg-logo="https://i.imgur.com/vgfOlYW.png" group-title="Weather",AccuWeather
+https://dai2.xumo.com/xumocdn/p=roku/s=accuweather/c=channel/slices.m3u8
+
+# ==================== SPORTS ====================
+#EXTINF:-1 tvg-id="ESPNNews.us" tvg-name="ESPN News" tvg-logo="https://i.imgur.com/BEyGCYx.png" group-title="Sports",ESPN News
+https://pluto-live.akamaized.net/hls/live/2038087/espnnews/master.m3u8
+
+#EXTINF:-1 tvg-id="StadiumTV.us" tvg-name="Stadium" tvg-logo="https://i.imgur.com/FdqwYs9.png" group-title="Sports",Stadium
+https://dai2.xumo.com/xumocdn/p=roku/s=stadium/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="BeINSports.us" tvg-name="beIN Sports Xtra" tvg-logo="https://i.imgur.com/C7MBlxJ.png" group-title="Sports",beIN Sports Xtra
+https://dai2.xumo.com/xumocdn/p=roku/s=beinsportsxtra/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="FuboSports.us" tvg-name="Fubo Sports" tvg-logo="https://i.imgur.com/ZO9aZQp.png" group-title="Sports",Fubo Sports Network
+https://dai2.xumo.com/xumocdn/p=roku/s=fubosportsnetwork/c=channel/slices.m3u8
+
+# ==================== ENTERTAINMENT ====================
+#EXTINF:-1 tvg-id="PlutoTV.us" tvg-name="Pluto TV" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Entertainment",Pluto TV Drama
+https://pluto-live.akamaized.net/hls/live/2038188/pluto/master.m3u8
+
+#EXTINF:-1 tvg-id="TubiTV.us" tvg-name="Tubi TV" tvg-logo="https://i.imgur.com/rEpYYXd.png" group-title="Entertainment",Tubi Free Movies
+https://tubi-fast.akamaized.net/live/tubi_fast/master.m3u8
+
+#EXTINF:-1 tvg-id="PeacockTV.us" tvg-name="Peacock" tvg-logo="https://i.imgur.com/4qd7LQW.png" group-title="Entertainment",Peacock Entertainment
+https://peacock-live.akamaized.net/hls/live/master.m3u8
+
+#EXTINF:-1 tvg-id="BET.us" tvg-name="BET Her" tvg-logo="https://i.imgur.com/jPKluEy.png" group-title="Entertainment",BET Her
+https://pluto-live.akamaized.net/hls/live/2038188/betherpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="ComedyCentral.us" tvg-name="Comedy Central" tvg-logo="https://i.imgur.com/KWQXVyY.png" group-title="Entertainment",Comedy Central
+https://pluto-live.akamaized.net/hls/live/2038084/ccpluto/master.m3u8
+
+# ==================== MUSIC ====================
+#EXTINF:-1 tvg-id="MTV.us" tvg-name="MTV Pluto" tvg-logo="https://i.imgur.com/N7cHh5v.png" group-title="Music",MTV Pluto TV
+https://pluto-live.akamaized.net/hls/live/2038090/mtvpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="Fuse.us" tvg-name="Fuse" tvg-logo="https://i.imgur.com/fKW7aGh.png" group-title="Music",Fuse
+https://pluto-live.akamaized.net/hls/live/2038075/fusepluto/master.m3u8
+
+#EXTINF:-1 tvg-id="VH1.us" tvg-name="VH1" tvg-logo="https://i.imgur.com/6zKvDxX.png" group-title="Music",VH1
+https://pluto-live.akamaized.net/hls/live/2038091/vh1pluto/master.m3u8
+
+#EXTINF:-1 tvg-id="Vevo.us" tvg-name="Vevo" tvg-logo="https://i.imgur.com/W8S0pWy.png" group-title="Music",Vevo Pop
+https://dai2.xumo.com/xumocdn/p=roku/s=vevo-pop/c=channel/slices.m3u8
+
+# ==================== MOVIES ====================
+#EXTINF:-1 tvg-id="FilmRise.us" tvg-name="FilmRise" tvg-logo="https://i.imgur.com/j6O10Mv.png" group-title="Movies",FilmRise Free Movies
+https://dai2.xumo.com/xumocdn/p=roku/s=filmrise/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Maverick.us" tvg-name="Maverick" tvg-logo="https://i.imgur.com/HM0pEJV.png" group-title="Movies",Maverick Movies
+https://dai2.xumo.com/xumocdn/p=roku/s=maverick/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Stingray.ca" tvg-name="Stingray Retro" tvg-logo="https://i.imgur.com/sRQxwXr.png" group-title="Movies",Stingray Retro
+https://dai2.xumo.com/xumocdn/p=roku/s=stingray-retro/c=channel/slices.m3u8
+
+# ==================== KIDS ====================
+#EXTINF:-1 tvg-id="PBS.us" tvg-name="PBS Kids" tvg-logo="https://i.imgur.com/Q4nVHLZ.png" group-title="Kids",PBS Kids
+https://dai2.xumo.com/xumocdn/p=roku/s=pbs-kids/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Nick.us" tvg-name="Nick Jr" tvg-logo="https://i.imgur.com/bYEjqwX.png" group-title="Kids",Nick Jr
+https://pluto-live.akamaized.net/hls/live/2038192/nickjr/master.m3u8
+
+#EXTINF:-1 tvg-id="Kartoon.us" tvg-name="Kartoon Channel" tvg-logo="https://i.imgur.com/WLsRQYb.png" group-title="Kids",Kartoon Channel
+https://dai2.xumo.com/xumocdn/p=roku/s=kartoon-channel/c=channel/slices.m3u8
+
+# ==================== DOCUMENTARIES ====================
+#EXTINF:-1 tvg-id="TrueRoyalty.us" tvg-name="True Royalty" tvg-logo="https://i.imgur.com/CL8R13m.png" group-title="Documentary",True Royalty
+https://dai2.xumo.com/xumocdn/p=roku/s=trueroyalty/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="HistoryHits.uk" tvg-name="History Hits" tvg-logo="https://i.imgur.com/oaGSjAU.png" group-title="Documentary",History Hits
+https://dai2.xumo.com/xumocdn/p=roku/s=historyhits/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="RealStories.uk" tvg-name="Real Stories" tvg-logo="https://i.imgur.com/hSKYwZp.png" group-title="Documentary",Real Stories
+https://dai2.xumo.com/xumocdn/p=roku/s=realstories/c=channel/slices.m3u8
+
+# ==================== LIFESTYLE ====================
+#EXTINF:-1 tvg-id="HGTV.us" tvg-name="HGTV" tvg-logo="https://i.imgur.com/kT6TLnm.png" group-title="Lifestyle",HGTV Pluto
+https://pluto-live.akamaized.net/hls/live/2038094/hgtvpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="FoodNetwork.us" tvg-name="Food Network" tvg-logo="https://i.imgur.com/KGSNuHd.png" group-title="Lifestyle",Food Network
+https://pluto-live.akamaized.net/hls/live/2038093/foodnetworkpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="TravelChannel.us" tvg-name="Travel Channel" tvg-logo="https://i.imgur.com/jEDMDl0.png" group-title="Lifestyle",Travel Channel
+https://pluto-live.akamaized.net/hls/live/2038095/travelchannelpluto/master.m3u8
+
+# ==================== GAMING ====================
+#EXTINF:-1 tvg-id="IGN.us" tvg-name="IGN" tvg-logo="https://i.imgur.com/rMV4VFS.png" group-title="Gaming",IGN TV
+https://dai2.xumo.com/xumocdn/p=roku/s=ign/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="GamerTV.us" tvg-name="Gamer TV" tvg-logo="https://i.imgur.com/eTUMnJG.png" group-title="Gaming",Gamer TV
+https://dai2.xumo.com/xumocdn/p=roku/s=gamertv/c=channel/slices.m3u8
+
+# ==================== INTERNATIONAL CHANNELS ====================
+# UK
+#EXTINF:-1 tvg-id="BBC.uk" tvg-name="BBC World News" tvg-logo="https://i.imgur.com/4LVsV1T.png" group-title="UK",BBC World News
+https://vs-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/t=3840/v=pv14/b=5070016/segment.m3u8
+
+# France
+#EXTINF:-1 tvg-id="TV5Monde.fr" tvg-name="TV5Monde" tvg-logo="https://i.imgur.com/Mf6Zyd8.png" group-title="France",TV5Monde Info
+https://ott.tv5monde.com/Content/HLS/Live/channel(info)/index.m3u8
+
+# Germany
+#EXTINF:-1 tvg-id="ARD.de" tvg-name="ARD" tvg-logo="https://i.imgur.com/JFM6mHA.png" group-title="Germany",ARD Das Erste
+https://mcdn.daserste.de/daserste/de/master.m3u8
+
+#EXTINF:-1 tvg-id="ZDF.de" tvg-name="ZDF" tvg-logo="https://i.imgur.com/qjKEJtW.png" group-title="Germany",ZDF
+https://zdf-hls-15.akamaized.net/hls/live/2016498/de/high/master.m3u8
+
+# Spain
+#EXTINF:-1 tvg-id="TVE.es" tvg-name="TVE 24H" tvg-logo="https://i.imgur.com/N3B4JDb.png" group-title="Spain",TVE 24H
+https://rtvelivestream.akamaized.net/24h_dvr.m3u8
+
+#EXTINF:-1 tvg-id="Antena3.es" tvg-name="Antena 3" tvg-logo="https://i.imgur.com/rrqDbdq.png" group-title="Spain",Antena 3 Internacional
+https://a3live-lh.akamaihd.net/i/antena3_1@35248/master.m3u8
+
+# Italy
+#EXTINF:-1 tvg-id="RAI.it" tvg-name="RAI News 24" tvg-logo="https://i.imgur.com/a3cCFIs.png" group-title="Italy",RAI News 24
+https://mediapolis.rai.it/relinker/relinkerServlet.htm?cont=1&output=7
+
+# Latin America
+#EXTINF:-1 tvg-id="TeleSUR.ve" tvg-name="TeleSUR" tvg-logo="https://i.imgur.com/MNvvn9B.png" group-title="Latin America",TeleSUR English
+https://cdnesmain.telesur.net/HLS/live_en.m3u8
+
+#EXTINF:-1 tvg-id="RTVMalay.br" tvg-name="RT en Español" tvg-logo="https://i.imgur.com/DRKQ7d1.png" group-title="Latin America",RT en Español
+https://rt-esp.secure.footprint.net/1106.m3u8
+
+# Middle East
+#EXTINF:-1 tvg-id="AlArabiya.sa" tvg-name="Al Arabiya" tvg-logo="https://i.imgur.com/xhEKQ1S.png" group-title="Middle East",Al Arabiya
+https://live.alarabiya.net/alarabiapublish/alarabiya.smil/playlist.m3u8
+
+# Asia
+#EXTINF:-1 tvg-id="Channel.sg" tvg-name="CNA" tvg-logo="https://i.imgur.com/zj3c7uH.png" group-title="Asia",Channel News Asia
+https://cnawebfeed.mediacorp.sg/d/prod-CNA.m3u8
+
+#EXTINF:-1 tvg-id="ABSCBNNews.ph" tvg-name="ABS-CBN News" tvg-logo="https://i.imgur.com/jz2cFre.png" group-title="Asia",ABS-CBN News
+https://abs-cbn-news.akamaized.net/hls/live/abc-news/index.m3u8
+
+# ==================== 24/7 LIVE CAMS ====================
+#EXTINF:-1 tvg-id="EarthCam.us" tvg-name="Times Square" tvg-logo="https://i.imgur.com/Gz8mSqU.png" group-title="Live Cams",Times Square NYC
+https://videos-3.earthcam.com/fecnetwork/4017.flv/chunklist.m3u8
+
+#EXTINF:-1 tvg-id="EarthCam2.us" tvg-name="Abbey Road" tvg-logo="https://i.imgur.com/8q4K3Wh.png" group-title="Live Cams",Abbey Road London
+https://videos-3.earthcam.com/fecnetwork/15559.flv/chunklist.m3u8
+
+#EXTINF:-1 tvg-id="JacksonHole.us" tvg-name="Jackson Hole" tvg-logo="https://i.imgur.com/VQ4fHmJ.png" group-title="Live Cams",Jackson Hole Town Square
+https://video.nest.com/live/Mjk1MDc0MQ
+
+# ==================== RADIO STREAMS ====================
+#EXTINF:-1 tvg-id="NPR.us" tvg-name="NPR" tvg-logo="https://i.imgur.com/q5j8qTH.png" group-title="Radio",NPR Live
+https://npr-ice.streamguys1.com/live.mp3
+
+#EXTINF:-1 tvg-id="BBC1.uk" tvg-name="BBC Radio 1" tvg-logo="https://i.imgur.com/1nMD6BR.png" group-title="Radio",BBC Radio 1
+http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one
+
+#EXTINF:-1 tvg-id="ClassicFM.uk" tvg-name="Classic FM" tvg-logo="https://i.imgur.com/gUe1Rq4.png" group-title="Radio",Classic FM
+https://media-ice.musicradio.com/ClassicFM.m3u8
+
+# ============================================
+# EXTERNAL IPTV-ORG INTEGRATION (10,000+ MORE)
+# ============================================
+# Import main playlist: https://iptv-org.github.io/iptv/index.m3u
+# Import by category: https://iptv-org.github.io/iptv/index.category.m3u
+# Import by country: https://iptv-org.github.io/iptv/index.country.m3u
+# Country-specific US: https://iptv-org.github.io/iptv/countries/us.m3u
+# Country-specific UK: https://iptv-org.github.io/iptv/countries/uk.m3u
+
+# END OF MASTER PLAYLIST

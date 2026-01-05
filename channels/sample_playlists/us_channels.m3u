@@ -1,0 +1,21 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="CBSNews.us" tvg-name="CBS News" tvg-logo="https://i.imgur.com/cEFKdqO.png" group-title="News",CBS News
+https://cbsn-us.cbsistatic.com/m3u/cbsn-national.m3u8
+#EXTINF:-1 tvg-id="ABCNews.us" tvg-name="ABC News" tvg-logo="https://i.imgur.com/BCOY8G6.png" group-title="News",ABC News Live
+https://content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8
+#EXTINF:-1 tvg-id="NASATV.us" tvg-name="NASA TV" tvg-logo="https://i.imgur.com/7lmwHAs.png" group-title="Science",NASA TV
+https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8
+#EXTINF:-1 tvg-id="Bloomberg.us" tvg-name="Bloomberg TV" tvg-logo="https://i.imgur.com/8G5Qhf9.png" group-title="Business",Bloomberg TV US
+https://liveproduseast.blob.core.usgovcloudapi.net/live/dc/live.m3u8
+#EXTINF:-1 tvg-id="WeatherNation.us" tvg-name="WeatherNation" tvg-logo="https://i.imgur.com/ukLvFCE.png" group-title="Weather",WeatherNation TV
+https://weathernation-roku-app.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Newsy.us" tvg-name="Newsy" tvg-logo="https://i.imgur.com/n4o3jfz.png" group-title="News",Newsy
+https://dai2.xumo.com/xumocdn/p=roku/s=newsy/c=channel/slices.m3u8
+#EXTINF:-1 tvg-id="CourtTV.us" tvg-name="Court TV" tvg-logo="https://i.imgur.com/5nbfXbd.png" group-title="News",Court TV
+https://dai2.xumo.com/xumocdn/p=roku/s=courttv/c=channel/slices.m3u8
+#EXTINF:-1 tvg-id="BET.us" tvg-name="BET Her" tvg-logo="https://i.imgur.com/jPKluEy.png" group-title="Entertainment",BET Her
+https://pluto-live.akamaized.net/hls/live/2038188/betherpluto/master.m3u8
+#EXTINF:-1 tvg-id="Fuse.us" tvg-name="Fuse" tvg-logo="https://i.imgur.com/fKW7aGh.png" group-title="Music",Fuse
+https://pluto-live.akamaized.net/hls/live/2038075/fusepluto/master.m3u8
+#EXTINF:-1 tvg-id="MTV.us" tvg-name="MTV Pluto" tvg-logo="https://i.imgur.com/N7cHh5v.png" group-title="Music",MTV Pluto TV
+https://pluto-live.akamaized.net/hls/live/2038090/mtvpluto/master.m3u8
