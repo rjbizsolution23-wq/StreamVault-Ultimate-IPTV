@@ -1,0 +1,170 @@
+#EXTM3U
+#EXTM3U x-tvg-url="https://iptv-org.github.io/epg/guides/us/tvguide.com.xml"
+
+# ============================================
+# STREAMVAULT PRO - FREE ENTERTAINMENT CHANNELS
+# All streams are from official free sources
+# Last Updated: 2026-01-05
+# ============================================
+
+# ==================== PLUTO TV MOVIES ====================
+#EXTINF:-1 tvg-id="PlutoMovies.us" tvg-name="Pluto Movies" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Movies",Pluto TV Movies
+https://pluto-live.akamaized.net/hls/live/2038172/plutomovies/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoAction.us" tvg-name="Pluto Action" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Movies",Pluto TV Action
+https://pluto-live.akamaized.net/hls/live/2038172/action/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoComedy.us" tvg-name="Pluto Comedy" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Movies",Pluto TV Comedy
+https://pluto-live.akamaized.net/hls/live/2038172/comedy/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoHorror.us" tvg-name="Pluto Horror" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Movies",Pluto TV Horror
+https://pluto-live.akamaized.net/hls/live/2038172/horror/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoRomance.us" tvg-name="Pluto Romance" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Movies",Pluto TV Romance
+https://pluto-live.akamaized.net/hls/live/2038172/romance/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoThriller.us" tvg-name="Pluto Thriller" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Movies",Pluto TV Thriller
+https://pluto-live.akamaized.net/hls/live/2038172/thriller/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoDrama.us" tvg-name="Pluto Drama" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Movies",Pluto TV Drama
+https://pluto-live.akamaized.net/hls/live/2038172/drama/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoSciFi.us" tvg-name="Pluto Sci-Fi" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Movies",Pluto TV Sci-Fi
+https://pluto-live.akamaized.net/hls/live/2038172/scifi/master.m3u8
+
+# ==================== TUBI TV (FREE) ====================
+#EXTINF:-1 tvg-id="Tubi.us" tvg-name="Tubi TV" tvg-logo="https://i.imgur.com/rEpYYXd.png" group-title="Movies",Tubi TV Free Movies
+https://tubi-fast.akamaized.net/live/tubi/master.m3u8
+
+#EXTINF:-1 tvg-id="TubiAction.us" tvg-name="Tubi Action" tvg-logo="https://i.imgur.com/rEpYYXd.png" group-title="Movies",Tubi Action Movies
+https://tubi-fast.akamaized.net/live/action/master.m3u8
+
+# ==================== XUMO FREE MOVIES ====================
+#EXTINF:-1 tvg-id="FilmRise.us" tvg-name="FilmRise Movies" tvg-logo="https://i.imgur.com/j6O10Mv.png" group-title="Movies",FilmRise Free Movies
+https://dai2.xumo.com/xumocdn/p=roku/s=filmrise/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Maverick.us" tvg-name="Maverick Movies" tvg-logo="https://i.imgur.com/HM0pEJV.png" group-title="Movies",Maverick Movies
+https://dai2.xumo.com/xumocdn/p=roku/s=maverick/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="UsaToday.us" tvg-name="USA Today Entertainment" tvg-logo="https://i.imgur.com/UcVPJHT.png" group-title="Movies",USA Today Movies
+https://dai2.xumo.com/xumocdn/p=roku/s=usatoday/c=channel/slices.m3u8
+
+# ==================== TV SERIES (FREE) ====================
+#EXTINF:-1 tvg-id="PlutoTV.us" tvg-name="Pluto TV Drama" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="TV Series",Pluto TV Drama Series
+https://pluto-live.akamaized.net/hls/live/2038172/dramaseries/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoReality.us" tvg-name="Pluto Reality" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="TV Series",Pluto TV Reality
+https://pluto-live.akamaized.net/hls/live/2038172/reality/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoClassic.us" tvg-name="Pluto Classic TV" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="TV Series",Pluto TV Classic
+https://pluto-live.akamaized.net/hls/live/2038172/classictv/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoCrime.us" tvg-name="Pluto Crime" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="TV Series",Pluto TV Crime
+https://pluto-live.akamaized.net/hls/live/2038172/crime/master.m3u8
+
+# ==================== COMEDY ====================
+#EXTINF:-1 tvg-id="ComedyCentral.us" tvg-name="Comedy Central" tvg-logo="https://i.imgur.com/KWQXVyY.png" group-title="Comedy",Comedy Central
+https://pluto-live.akamaized.net/hls/live/2038084/ccpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="LOL.us" tvg-name="LOL Comedy" tvg-logo="https://i.imgur.com/qKjXzKH.png" group-title="Comedy",LOL! Comedy
+https://dai2.xumo.com/xumocdn/p=roku/s=lol/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="StandUp.us" tvg-name="Stand Up TV" tvg-logo="https://i.imgur.com/KWQXVyY.png" group-title="Comedy",Stand Up TV
+https://dai2.xumo.com/xumocdn/p=roku/s=standuptv/c=channel/slices.m3u8
+
+# ==================== DOCUMENTARIES ====================
+#EXTINF:-1 tvg-id="Smithsonian.us" tvg-name="Smithsonian" tvg-logo="https://i.imgur.com/hKf7yQm.png" group-title="Documentary",Smithsonian Channel
+https://dai2.xumo.com/xumocdn/p=roku/s=smithsonian/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="NatGeo.us" tvg-name="Nat Geo Wild" tvg-logo="https://i.imgur.com/EUn1HvT.png" group-title="Documentary",Nat Geo Wild
+https://dai2.xumo.com/xumocdn/p=roku/s=natgeowild/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="TrueRoyalty.us" tvg-name="True Royalty" tvg-logo="https://i.imgur.com/CL8R13m.png" group-title="Documentary",True Royalty TV
+https://dai2.xumo.com/xumocdn/p=roku/s=trueroyalty/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="RealStories.us" tvg-name="Real Stories" tvg-logo="https://i.imgur.com/hSKYwZp.png" group-title="Documentary",Real Stories
+https://dai2.xumo.com/xumocdn/p=roku/s=realstories/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Timeline.us" tvg-name="Timeline History" tvg-logo="https://i.imgur.com/oaGSjAU.png" group-title="Documentary",Timeline - World History
+https://dai2.xumo.com/xumocdn/p=roku/s=timeline/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Absolute.us" tvg-name="Absolute History" tvg-logo="https://i.imgur.com/oaGSjAU.png" group-title="Documentary",Absolute History
+https://dai2.xumo.com/xumocdn/p=roku/s=absolutehistory/c=channel/slices.m3u8
+
+# ==================== LIFESTYLE ====================
+#EXTINF:-1 tvg-id="HGTV.us" tvg-name="HGTV" tvg-logo="https://i.imgur.com/kT6TLnm.png" group-title="Lifestyle",HGTV Pluto
+https://pluto-live.akamaized.net/hls/live/2038094/hgtvpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="FoodNetwork.us" tvg-name="Food Network" tvg-logo="https://i.imgur.com/KGSNuHd.png" group-title="Lifestyle",Food Network
+https://pluto-live.akamaized.net/hls/live/2038093/foodnetworkpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="TravelChannel.us" tvg-name="Travel Channel" tvg-logo="https://i.imgur.com/jEDMDl0.png" group-title="Lifestyle",Travel Channel
+https://pluto-live.akamaized.net/hls/live/2038095/travelchannelpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="TastemadeTV.us" tvg-name="Tastemade" tvg-logo="https://i.imgur.com/cPwKfhs.png" group-title="Lifestyle",Tastemade
+https://dai2.xumo.com/xumocdn/p=roku/s=tastemade/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="People.us" tvg-name="People TV" tvg-logo="https://i.imgur.com/QE5UEPk.png" group-title="Lifestyle",People TV
+https://dai2.xumo.com/xumocdn/p=roku/s=peopletv/c=channel/slices.m3u8
+
+# ==================== MUSIC CHANNELS ====================
+#EXTINF:-1 tvg-id="MTV.us" tvg-name="MTV" tvg-logo="https://i.imgur.com/N7cHh5v.png" group-title="Music",MTV Pluto TV
+https://pluto-live.akamaized.net/hls/live/2038090/mtvpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="VH1.us" tvg-name="VH1" tvg-logo="https://i.imgur.com/6zKvDxX.png" group-title="Music",VH1 Pluto TV
+https://pluto-live.akamaized.net/hls/live/2038091/vh1pluto/master.m3u8
+
+#EXTINF:-1 tvg-id="Vevo.us" tvg-name="Vevo Pop" tvg-logo="https://i.imgur.com/W8S0pWy.png" group-title="Music",Vevo Pop
+https://dai2.xumo.com/xumocdn/p=roku/s=vevo-pop/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="VevoHits.us" tvg-name="Vevo Hits" tvg-logo="https://i.imgur.com/W8S0pWy.png" group-title="Music",Vevo Hits
+https://dai2.xumo.com/xumocdn/p=roku/s=vevo-hits/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="VevoCountry.us" tvg-name="Vevo Country" tvg-logo="https://i.imgur.com/W8S0pWy.png" group-title="Music",Vevo Country
+https://dai2.xumo.com/xumocdn/p=roku/s=vevo-country/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="VevoRnB.us" tvg-name="Vevo R&B" tvg-logo="https://i.imgur.com/W8S0pWy.png" group-title="Music",Vevo R&B
+https://dai2.xumo.com/xumocdn/p=roku/s=vevo-rnb/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Fuse.us" tvg-name="Fuse" tvg-logo="https://i.imgur.com/fKW7aGh.png" group-title="Music",Fuse
+https://pluto-live.akamaized.net/hls/live/2038075/fusepluto/master.m3u8
+
+#EXTINF:-1 tvg-id="Qello.us" tvg-name="Qello Concerts" tvg-logo="https://i.imgur.com/TvQnTPS.png" group-title="Music",Qello Concerts
+https://dai2.xumo.com/xumocdn/p=roku/s=qello/c=channel/slices.m3u8
+
+# ==================== KIDS ====================
+#EXTINF:-1 tvg-id="PBSKids.us" tvg-name="PBS Kids" tvg-logo="https://i.imgur.com/Q4nVHLZ.png" group-title="Kids",PBS Kids
+https://dai2.xumo.com/xumocdn/p=roku/s=pbs-kids/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="NickJr.us" tvg-name="Nick Jr" tvg-logo="https://i.imgur.com/bYEjqwX.png" group-title="Kids",Nick Jr
+https://pluto-live.akamaized.net/hls/live/2038192/nickjr/master.m3u8
+
+#EXTINF:-1 tvg-id="Nickelodeon.us" tvg-name="Nickelodeon" tvg-logo="https://i.imgur.com/A7pD2zw.png" group-title="Kids",Nickelodeon
+https://pluto-live.akamaized.net/hls/live/2038086/nick/master.m3u8
+
+#EXTINF:-1 tvg-id="TeenNick.us" tvg-name="TeenNick" tvg-logo="https://i.imgur.com/lhSfZeV.png" group-title="Kids",TeenNick
+https://pluto-live.akamaized.net/hls/live/2038086/teennick/master.m3u8
+
+#EXTINF:-1 tvg-id="KartoonChannel.us" tvg-name="Kartoon Channel" tvg-logo="https://i.imgur.com/WLsRQYb.png" group-title="Kids",Kartoon Channel
+https://dai2.xumo.com/xumocdn/p=roku/s=kartoon-channel/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="BabyFirst.us" tvg-name="BabyFirst TV" tvg-logo="https://i.imgur.com/xJHnRd3.png" group-title="Kids",BabyFirst TV
+https://dai2.xumo.com/xumocdn/p=roku/s=babyfirst/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Kidoodle.us" tvg-name="Kidoodle TV" tvg-logo="https://i.imgur.com/QCmLbNx.png" group-title="Kids",Kidoodle TV
+https://dai2.xumo.com/xumocdn/p=roku/s=kidoodle/c=channel/slices.m3u8
+
+# ==================== ENTERTAINMENT ====================
+#EXTINF:-1 tvg-id="BET.us" tvg-name="BET" tvg-logo="https://i.imgur.com/jPKluEy.png" group-title="Entertainment",BET Pluto
+https://pluto-live.akamaized.net/hls/live/2038188/betpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="BETHer.us" tvg-name="BET Her" tvg-logo="https://i.imgur.com/jPKluEy.png" group-title="Entertainment",BET Her
+https://pluto-live.akamaized.net/hls/live/2038188/betherpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="CMT.us" tvg-name="CMT" tvg-logo="https://i.imgur.com/XxQqwvC.png" group-title="Entertainment",CMT Pluto
+https://pluto-live.akamaized.net/hls/live/2038089/cmtpluto/master.m3u8
+
+#EXTINF:-1 tvg-id="Paramount.us" tvg-name="Paramount" tvg-logo="https://i.imgur.com/zAXUhBj.png" group-title="Entertainment",Paramount Network
+https://pluto-live.akamaized.net/hls/live/2038088/paramountpluto/master.m3u8
+
+# END OF ENTERTAINMENT PLAYLIST

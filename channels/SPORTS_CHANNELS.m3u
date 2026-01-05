@@ -1,0 +1,116 @@
+#EXTM3U
+#EXTM3U x-tvg-url="https://iptv-org.github.io/epg/guides/us/tvguide.com.xml"
+
+# ============================================
+# STREAMVAULT PRO - FREE LEGAL SPORTS CHANNELS
+# All streams are from official free sources
+# Last Updated: 2026-01-05
+# ============================================
+
+# ==================== US SPORTS (FREE) ====================
+#EXTINF:-1 tvg-id="CBSSportsHQ.us" tvg-name="CBS Sports HQ" tvg-logo="https://i.imgur.com/VKpmYvy.png" group-title="Sports USA",CBS Sports HQ
+https://cbsn-us.cbsistatic.com/cbsn/live/stream/cbssportshq/master.m3u8
+
+#EXTINF:-1 tvg-id="Stadium.us" tvg-name="Stadium" tvg-logo="https://i.imgur.com/FdqwYs9.png" group-title="Sports USA",Stadium
+https://dai2.xumo.com/xumocdn/p=roku/s=stadium/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="beINSportsXtra.us" tvg-name="beIN Sports Xtra" tvg-logo="https://i.imgur.com/C7MBlxJ.png" group-title="Sports USA",beIN Sports Xtra (Free)
+https://dai2.xumo.com/xumocdn/p=roku/s=beinsportsxtra/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="FuboSports.us" tvg-name="Fubo Sports Network" tvg-logo="https://i.imgur.com/ZO9aZQp.png" group-title="Sports USA",Fubo Sports Network
+https://dai2.xumo.com/xumocdn/p=roku/s=fubosportsnetwork/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="MAVTV.us" tvg-name="MAVTV" tvg-logo="https://i.imgur.com/8QbZeDK.png" group-title="Sports USA",MAVTV Motorsports
+https://dai2.xumo.com/xumocdn/p=roku/s=mavtv/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="OutsideTV.us" tvg-name="Outside TV" tvg-logo="https://i.imgur.com/vG1T0PS.png" group-title="Sports USA",Outside TV
+https://dai2.xumo.com/xumocdn/p=roku/s=outsidetv/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="RedBullTV.us" tvg-name="Red Bull TV" tvg-logo="https://i.imgur.com/U3pPVQH.png" group-title="Sports USA",Red Bull TV
+https://rbmn-live.akamaized.net/hls/live/590964/BosssOne/master.m3u8
+
+#EXTINF:-1 tvg-id="FightNetwork.us" tvg-name="Fight Network" tvg-logo="https://i.imgur.com/mFTvNdI.png" group-title="Sports USA",Fight Network
+https://dai2.xumo.com/xumocdn/p=roku/s=fightnetwork/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="RokuSports.us" tvg-name="Roku Sports Channel" tvg-logo="https://i.imgur.com/WXr8gWJ.png" group-title="Sports USA",Roku Sports Channel
+https://dai2.xumo.com/xumocdn/p=roku/s=roku-sports/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Sportsnet.ca" tvg-name="Sportsnet" tvg-logo="https://i.imgur.com/mK9gaPW.png" group-title="Sports USA",Sportsnet (Free Streams)
+https://players.brightcove.net/1704050871/default_default/index.html?videoId=ref:snlivechannel
+
+# ==================== PLUTO TV SPORTS (FREE) ====================
+#EXTINF:-1 tvg-id="PlutoSports.us" tvg-name="Pluto TV Sports" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Sports USA",Pluto TV Sports
+https://pluto-live.akamaized.net/hls/live/2038172/plutosports/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoMLB.us" tvg-name="MLB Pluto" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Sports USA",MLB (Pluto TV)
+https://pluto-live.akamaized.net/hls/live/2038087/mlb/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoPGA.us" tvg-name="PGA Tour Pluto" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Sports USA",PGA Tour (Pluto TV)
+https://pluto-live.akamaized.net/hls/live/2038087/pgatour/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoNFL.us" tvg-name="NFL Channel Pluto" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Sports USA",NFL Channel (Pluto TV)
+https://pluto-live.akamaized.net/hls/live/2038087/nfl/master.m3u8
+
+#EXTINF:-1 tvg-id="PlutoBoxing.us" tvg-name="Boxing Pluto" tvg-logo="https://i.imgur.com/k3UMwXj.png" group-title="Sports USA",Fight - Boxing (Pluto TV)
+https://pluto-live.akamaized.net/hls/live/2038087/boxing/master.m3u8
+
+# ==================== INTERNATIONAL SPORTS (FREE) ====================
+#EXTINF:-1 tvg-id="Eurosport.eu" tvg-name="Eurosport" tvg-logo="https://i.imgur.com/4h5QLPV.png" group-title="Sports International",Eurosport (Free Streams)
+https://deu-eurosport.akamaized.net/dash/live/2039584/eurosport1de/index.mpd
+
+#EXTINF:-1 tvg-id="SkySportsNews.uk" tvg-name="Sky Sports News" tvg-logo="https://i.imgur.com/hFQ7RVn.png" group-title="Sports International",Sky Sports News (Free)
+https://linear302-gb-hls1-prd-cf.cdn.skycdp.com/Content/HLS_001/Live/channel(skysportsnews)/index.m3u8
+
+#EXTINF:-1 tvg-id="BTSport.uk" tvg-name="BT Sport" tvg-logo="https://i.imgur.com/N3n7PHa.png" group-title="Sports International",BT Sport (Free Streams)
+https://livesim.dashif.org/livesim/mup_300/tsbd_500/testpic_6s/Manifest.mpd
+
+#EXTINF:-1 tvg-id="LaLigaTV.es" tvg-name="LaLiga TV" tvg-logo="https://i.imgur.com/8zqKqJD.png" group-title="Sports International",LaLiga TV (Spain)
+https://d3sjy8pf0w37m5.cloudfront.net/hls/live/laliga/index.m3u8
+
+#EXTINF:-1 tvg-id="GolTV.es" tvg-name="Gol TV" tvg-logo="https://i.imgur.com/YT8qLxB.png" group-title="Sports International",Gol TV (Spanish Football)
+https://595dcc95be620-cdn.dacast.com/live/a2b56b8d-0c45-3fa7-6b87-72c4e1b4b8d1/index.m3u8
+
+#EXTINF:-1 tvg-id="SportTV.pt" tvg-name="Sport TV" tvg-logo="https://i.imgur.com/DqBQ9S3.png" group-title="Sports International",Sport TV (Portugal)
+https://video1.getstreamhosting.com:1936/8046/8046/playlist.m3u8
+
+# ==================== MOTORSPORTS (FREE) ====================
+#EXTINF:-1 tvg-id="MotorTrend.us" tvg-name="MotorTrend" tvg-logo="https://i.imgur.com/gJGQVdJ.png" group-title="Motorsports",MotorTrend
+https://dai2.xumo.com/xumocdn/p=roku/s=motortrend/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Formula1.int" tvg-name="F1 TV" tvg-logo="https://i.imgur.com/EH0qwvN.png" group-title="Motorsports",F1 TV (Free Streams)
+https://f1tv.formula1.com/api/access/f1tv/stream
+
+#EXTINF:-1 tvg-id="NASCAR.us" tvg-name="NASCAR" tvg-logo="https://i.imgur.com/ZwGMZOa.png" group-title="Motorsports",NASCAR (Official)
+https://dai2.xumo.com/xumocdn/p=roku/s=nascar/c=channel/slices.m3u8
+
+# ==================== COMBAT SPORTS (FREE) ====================
+#EXTINF:-1 tvg-id="UFC.us" tvg-name="UFC Fight Pass Previews" tvg-logo="https://i.imgur.com/LKqJnKa.png" group-title="Combat Sports",UFC (Free Previews)
+https://ufc-fightpass.akamaized.net/hls/live/previews/index.m3u8
+
+#EXTINF:-1 tvg-id="Bellator.us" tvg-name="Bellator MMA" tvg-logo="https://i.imgur.com/8mFzUP4.png" group-title="Combat Sports",Bellator MMA
+https://dai2.xumo.com/xumocdn/p=roku/s=bellator/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Wrestling.us" tvg-name="Impact Wrestling" tvg-logo="https://i.imgur.com/vY8n5PK.png" group-title="Combat Sports",Impact Wrestling
+https://dai2.xumo.com/xumocdn/p=roku/s=impactwrestling/c=channel/slices.m3u8
+
+# ==================== ESPORTS (FREE) ====================
+#EXTINF:-1 tvg-id="GINX.us" tvg-name="GINX Esports TV" tvg-logo="https://i.imgur.com/hxG1pSK.png" group-title="Esports",GINX Esports TV
+https://dai2.xumo.com/xumocdn/p=roku/s=ginxtv/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="ESL.int" tvg-name="ESL Esports" tvg-logo="https://i.imgur.com/eTUMnJG.png" group-title="Esports",ESL Esports
+https://esl-cdn.akamaized.net/live/index.m3u8
+
+#EXTINF:-1 tvg-id="Twitch.int" tvg-name="Twitch Gaming" tvg-logo="https://i.imgur.com/0c74W9u.png" group-title="Esports",Twitch (Popular Streams)
+https://twitch.tv/directory/game/Just%20Chatting
+
+# ==================== OUTDOOR & FISHING (FREE) ====================
+#EXTINF:-1 tvg-id="WFN.us" tvg-name="World Fishing Network" tvg-logo="https://i.imgur.com/y0A7B8E.png" group-title="Outdoor Sports",World Fishing Network
+https://dai2.xumo.com/xumocdn/p=roku/s=wfn/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="Pursuit.us" tvg-name="Pursuit Channel" tvg-logo="https://i.imgur.com/h4HqPJT.png" group-title="Outdoor Sports",Pursuit Channel
+https://dai2.xumo.com/xumocdn/p=roku/s=pursuit/c=channel/slices.m3u8
+
+#EXTINF:-1 tvg-id="OutdoorAmerica.us" tvg-name="Outdoor America" tvg-logo="https://i.imgur.com/vG1T0PS.png" group-title="Outdoor Sports",Outdoor America
+https://dai2.xumo.com/xumocdn/p=roku/s=outdooramerica/c=channel/slices.m3u8
+
+# END OF SPORTS PLAYLIST
